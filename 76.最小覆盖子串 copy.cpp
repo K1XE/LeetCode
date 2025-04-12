@@ -6,85 +6,53 @@
 
 // @lc code=start
 class Solution {
-public:
-    string minWindow(string s, string t) {
-        
-    }
-};
-// @lc code=end
-class Solution {
     public:
         string minWindow(string s, string t) {
             unordered_map<char, int> hash_t;
-            unordered_map<char, int> hash_s;
-            for (char ch : t) {
-                hash_t[ch]++;
+            for (auto c : t)
+            {
+                hash_t[c] ++;
             }
-            int i = 0, len = INT_MAX, minLen = INT_MAX, start = -1, end = -1;
             int valid = 0;
-            for (int j = 0; j < s.size(); j++) {
-                char c = s[j];
-                if (hash_t.count(c))
+            int need = hash_t.size();
+            int i = 0, j = 0, start = -1, end = -1;
+            int len = INT32_MAX, minLen = INT32_MAX;
+            for (; j < s.size(); j ++ )
+            {
+                if (hash_t.find(s[j]) != hash_t.end())
                 {
-                    hash_s[c] ++;
-                    if (hash_s[c] == hash_t[c]) valid ++;
+                    hash_t[s[j]] --;
+                    if (hash_t[s[j]] == 0)
+                    {
+                        valid ++;
+                    }
                 }
-    
-                while (valid == hash_t.size())
+                while (valid >= need)
                 {
                     len = j - i + 1;
                     if (len < minLen)
                     {
-                        start = i;
-                        end = j;
                         minLen = len;
+                        end = j;
+                        start = i;
                     }
-                    char d = s[i ++ ];
-                    if (hash_t.count(d))
+                    if (hash_t.find(s[i]) == hash_t.end())
                     {
-                        hash_s[d] --;
-                        if (hash_s[d] < hash_t[d]) valid --;
+                        i ++;
+                    }
+                    else
+                    {
+                        hash_t[s[i]] ++;
+                        if (hash_t[s[i]] > 0)
+                        {
+                            valid --;
+                        }
+                        i ++;
                     }
                 }
-    
             }
-            return minLen == INT32_MAX ? "" : s.substr(start, minLen);
+            return (start == -1 || end == -1) ? "" : s.substr(start, minLen);
         }
     
     };
-class Solution {
-    public:
-        string minWindow(string s, string t) {
-            unordered_map<char, int> hash_t;
-            unordered_map<char, int> hash_s;
-            for (char ch : t) {
-                hash_t[ch]++;
-            }
-            int i = 0, len = INT_MAX, minLen = INT_MAX, start = -1, end = -1;
-            for (int j = 0; j < s.size(); j++) {
-                hash_s[s[j]]++;
-                while (isSubHash(hash_t, hash_s)) {
-                    len = j - i + 1;
-                    if (len < minLen) {
-                        start = i;
-                        end = j;
-                        minLen = len;
-                    }
-                    hash_s[s[i]]--;
-                    i++;
-                }
-            }
-            if (start == -1 && end == -1) return "";
-            return s.substr(start, minLen);
-        }
-    
-    private:
-        bool isSubHash(const unordered_map<char, int>& small, const unordered_map<char, int>& big) {
-            for (const auto& [key, val] : small) {
-                if (big.find(key) == big.end() || big.at(key) < val) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    };
+// @lc code=end

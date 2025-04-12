@@ -6,23 +6,22 @@
 
 // @lc code=start
 class Solution {
-    public:
-        vector<vector<string>> groupAnagrams(vector<string>& strs) {
-            unordered_map<string, vector<string>> hash;
-            for(string s: strs)
-            {
-                string sorted_s = s;
-                sort(sorted_s.begin(), sorted_s.end());
-                hash[sorted_s].push_back(s);
-            }
-            vector<vector<string>> res;
-            
-            for(auto [_, value] : hash)
-            {
-                res.push_back(value);
-            }
-            return res;
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> hash;
+        vector<vector<string>> res;
+        for (auto s : strs)
+        {
+            string s_sorted = s;
+            sort(s_sorted.begin(), s_sorted.end());
+            hash[s_sorted].push_back(s);
         }
-    };        
-// @lc code=end
+        for (auto [key, value] : hash)
+        {
+            res.push_back(value);
+        }
+        return res;
 
+    }
+};
+// @lc code=end

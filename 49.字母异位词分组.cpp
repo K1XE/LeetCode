@@ -16,6 +16,27 @@ class Solution {
                 hash[sorted_s].push_back(s);
             }
             vector<vector<string>> res;
+            res.reserve(hash.size());
+            for(auto [_, value] : hash)
+            {
+                res.push_back(value);
+            }
+            return res;
+        }
+    };
+// @lc code=end
+
+class Solution {
+    public:
+        vector<vector<string>> groupAnagrams(vector<string>& strs) {
+            unordered_map<string, vector<string>> hash;
+            for(string s: strs)
+            {
+                string sorted_s = s;
+                sort(sorted_s.begin(), sorted_s.end());
+                hash[sorted_s].push_back(s);
+            }
+            vector<vector<string>> res;
             
             for(auto [_, value] : hash)
             {
@@ -23,6 +44,4 @@ class Solution {
             }
             return res;
         }
-    };        
-// @lc code=end
-
+    };  
