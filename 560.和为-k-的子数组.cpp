@@ -24,5 +24,6 @@ public:
         return cnt;
     }
 };
+
 // @lc code=end
 

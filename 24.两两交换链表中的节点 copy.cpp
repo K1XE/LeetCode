@@ -37,5 +37,6 @@ class Solution {
             return dummyHead->next;
         }
     };
+    
 // @lc code=end
 

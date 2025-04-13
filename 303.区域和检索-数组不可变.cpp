@@ -23,6 +23,7 @@ public:
     }
 };
 
+
 /**
  * Your NumArray object will be instantiated and called as such:
  * NumArray* obj = new NumArray(nums);
