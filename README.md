@@ -26,7 +26,7 @@
     </tr>
     <tr>
       <td>中等</td>
-      <td>32</td>
+      <td>36</td>
     </tr>
     <tr>
       <td>困难</td>
