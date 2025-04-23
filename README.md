@@ -26,11 +26,11 @@
     </tr>
     <tr>
       <td>中等</td>
-      <td>36</td>
+      <td>37</td>
     </tr>
     <tr>
       <td>困难</td>
-      <td>3</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
