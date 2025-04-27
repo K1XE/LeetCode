@@ -20,7 +20,7 @@ class KMP{
             int i = 0, j = 0;
             while (i < s.size())
             {
-                if (s[i] == s[j])
+                if (s[i] == t[j])
                 {
                     i ++, j ++;
                     if (j == t.size()) return 1;
