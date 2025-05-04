@@ -27,6 +27,8 @@ class Solution:
                     u = u.right
                 u.right = tmp
             dfs(n.right)
+            
+            
         return dfs(root)
 # @lc code=end
 
