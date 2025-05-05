@@ -2,6 +2,7 @@ import sys
 import math
 import heapq
 import bisect
+import numpy as np
 from collections import deque, defaultdict, Counter
 from typing import List, Optional, Tuple
 
