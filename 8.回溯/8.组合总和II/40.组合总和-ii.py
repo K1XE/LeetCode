@@ -14,7 +14,7 @@ class Solution:
                     res.append(pack.copy())
                 return
             for i in range(sta, len(candidates)):
-                if i > sta and candidates[i - 1] == candidates[i] and vis[i] == 0: continue
+                if i > sta and candidates[i - 1] == candidates[i] and vis[i - 1] == 0: continue
                 sums += candidates[i]
                 if sums > target:
                     sums -= candidates[i]

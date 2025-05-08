@@ -12,7 +12,7 @@ class Solution:
         def dfs(vis: List, res: List, pack: List, sta):
             res.append(pack.copy())
             for i in range(sta, n):
-                if i > sta and nums[i] == nums[i - 1] and vis[i] == 0:
+                if i > sta and nums[i] == nums[i - 1] and vis[i - 1] == 0:
                     continue
                 vis[i] = 1
                 pack.append(nums[i])
