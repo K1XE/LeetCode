@@ -1,0 +1,18 @@
+#
+# @lc app=leetcode.cn id=153 lang=python3
+#
+# [153] 寻找旋转排序数组中的最小值
+#
+from mytools import *
+# @lc code=start
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l, r = 0, len(nums) - 1
+        while l < r:
+            mid = l + r >> 1
+            if nums[mid] > nums[r]:
+                l = mid + 1
+            else: r = mid
+        return nums[r]
+# @lc code=end
+
