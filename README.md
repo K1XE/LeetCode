@@ -26,11 +26,19 @@
     </tr>
     <tr>
       <td>中等</td>
+<<<<<<< HEAD
       <td>96</td>
     </tr>
     <tr>
       <td>困难</td>
       <td>14</td>
+=======
+      <td>94</td>
+    </tr>
+    <tr>
+      <td>困难</td>
+      <td>13</td>
+>>>>>>> 719f931564268016724df475ffbae0b7155bd4ed
     </tr>
   </tbody>
 </table>
