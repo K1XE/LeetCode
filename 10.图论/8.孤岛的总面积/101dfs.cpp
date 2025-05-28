@@ -30,3 +30,36 @@ template <class T>
 inline bool ckmax(T &x, const T &y) { return x < y ? (x = y, true) : false; }
 int init = []()
 { ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+int N, M;
+void dfs(V<V<int>>& g, int x, int y)
+{
+    g[x][y] = 0;
+    For (i, 4)
+    {
+        int nx = x + dir[i][0], ny = y + dir[i][1];
+        if (0 <= nx && nx < N && 0 <= ny && ny < M && g[nx][ny])
+        {
+            dfs(g, nx, ny);
+        }
+    }
+}
+
+int main()
+{
+    int res = 0;
+    cin >> N >> M;
+    V<V<int>> g(N, V<int>(M));
+    For (i, N) For(j, M) cin >> g[i][j];
+    For (i, N) {
+        if (g[i][0]) dfs(g, i, 0);
+        if (g[i][M - 1]) dfs(g, i, M - 1);
+    }
+    For (i, M) {
+        if (g[0][i]) dfs(g, 0, i);
+        if (g[N - 1][i]) dfs(g, N - 1, i);
+    }
+    For (i, N) For(j, M) {
+        if (g[i][j]) res ++;
+    }
+    cout << res << endl;
+}
