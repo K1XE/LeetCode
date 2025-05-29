@@ -1,6 +1,6 @@
 <div align="center">
   <p align="center">
-    <h1 style="margin-bottom: 0;">:sweat_drops:蒟蒻的刷题之旅:sweat_drops:</h1>
+    <h1 style="margin-bottom: 0;">刷题记录</h1>
     <a>
       📚<a href="https://leetcode.cn/studyplan/top-100-liked/" target="_blank">HOT100</a> | 
       📚<a href="https://programmercarl.com/" target="_blank">代码随想录</a>
@@ -22,15 +22,15 @@
   <tbody>
     <tr>
       <td>简单</td>
-      <td>69</td>
+      <td>75</td>
     </tr>
     <tr>
       <td>中等</td>
-      <td>114</td>
+      <td>130</td>
     </tr>
     <tr>
       <td>困难</td>
-      <td>18</td>
+      <td>22</td>
     </tr>
   </tbody>
 </table>
