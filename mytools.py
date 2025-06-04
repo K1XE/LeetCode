@@ -4,6 +4,7 @@ import heapq
 import bisect
 import numpy as np
 from collections import deque, defaultdict, Counter
+from itertools import combinations
 from typing import List, Optional, Tuple
 from functools import cache
 # ¶þ²æÊ÷½Úµã
