@@ -1,3 +1,10 @@
+/*
+ * @lc app=leetcode.cn id=416 lang=cpp
+ *
+ * [416] 分割等和子集
+ */
+
+// @lc code=start
 #pragma once
 #include <bits/stdc++.h>
 #include <ranges>
@@ -30,3 +37,39 @@ template <class T>
 inline bool ckmax(T &x, const T &y) { return x < y ? (x = y, true) : false; }
 int init = []()
 { ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sums_ = 0;
+        for (auto x : nums) sums_ += x;
+        if (sums_ % 2) return 0;
+        int t = sums_ / 2;
+        V<int> dp(t + 1, 0);
+        for (auto x : nums) {
+            for (int j = t; j >= x; j -- ) {
+                ckmax(dp[j], dp[j - x] + x);
+            }
+        }
+        return dp[t] == t;
+    }
+};
+// @lc code=end
+
+class Solution {
+    public:
+        bool canPartition(vector<int>& nums) {
+            int sums_ = 0;
+            for (auto x : nums) sums_ += x;
+            if (sums_ % 2) return 0;
+            int t = sums_ / 2;
+            V<bool> dp(t + 1, 0);
+            dp[0] = 1;
+            for (auto x : nums) {
+                for (int j = t; j >= x; j -- ) {
+                    dp[j] = dp[j] | dp[j - x];
+                }
+            }
+            return dp[t];
+        }
+    };

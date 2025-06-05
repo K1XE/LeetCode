@@ -7,6 +7,8 @@ from collections import deque, defaultdict, Counter
 from itertools import combinations
 from typing import List, Optional, Tuple
 from functools import cache
+from sortedcontainers import SortedSet
+dir = (1, 0), (-1, 0), (0, 1), (0, -1)
 # ¶þ²æÊ÷½Úµã
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):

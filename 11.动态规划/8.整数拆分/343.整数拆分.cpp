@@ -1,3 +1,10 @@
+/*
+ * @lc app=leetcode.cn id=343 lang=cpp
+ *
+ * [343] 整数拆分
+ */
+
+// @lc code=start
 #pragma once
 #include <bits/stdc++.h>
 #include <ranges>
@@ -30,3 +37,15 @@ template <class T>
 inline bool ckmax(T &x, const T &y) { return x < y ? (x = y, true) : false; }
 int init = []()
 { ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+
+class Solution {
+public:
+    int integerBreak(int n) {
+        V<int> dp(n + 1);
+        dp[0] = 0, dp[1] = 1;
+        FOR(i, 1, n + 1) FOR(j, 1, i + 1) ckmax(dp[i], max(i - j, dp[i - j]) * max(j, dp[j]));
+        return dp[n];
+    }
+};
+// @lc code=end
+
