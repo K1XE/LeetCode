@@ -12,6 +12,9 @@ class Solution:
         for c in coins:
             for i in range(c, amount + 1):
                 dp[i] = min(dp[i], dp[i - c] + 1)
+            print(dp)
+
         return dp[amount] if dp[amount] != amount + 1 else -1
+
 # @lc code=end
 
