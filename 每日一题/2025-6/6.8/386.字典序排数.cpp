@@ -1,3 +1,10 @@
+/*
+ * @lc app=leetcode.cn id=386 lang=cpp
+ *
+ * [386] 字典序排数
+ */
+
+// @lc code=start
 #pragma once
 #include <bits/stdc++.h>
 #include <ranges>
@@ -7,7 +14,7 @@ using namespace std;
 #define For(i, _) for (int i = 0, i##end = _; i < i##end; ++i)
 #define FOR(i, _, __) for (int i = _, i##end = __; i < i##end; ++i)
 #define Rep(i, _) for (int i = (_); i >= 0; --i)
-#define REP(i, __, _) for (int i = (__), i##end = _; i >= i##end; --i)
+#define REP(i, _, __) for (int i = (__), i##end = _; i >= i##end; --i)
 typedef long long ll;
 typedef unsigned long long ull;
 #define V vector
@@ -30,3 +37,25 @@ template <class T>
 inline bool ckmax(T &x, const T &y) { return x < y ? (x = y, true) : false; }
 int init = []()
 { ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+
+class Solution {
+public:
+    vector<int> lexicalOrder(int n) {
+        V<int> res;
+        res.reserve(n);
+        auto dfs = [&](auto&& self, int x) -> void
+        {
+            if (x > n) return;
+            res.pb(x);
+            FOR(i, 0, 10) {
+                int nxt = x * 10 + i;
+                if (nxt > n) break;
+                self(self, nxt);
+            }
+        };
+        FOR(i, 1, 10) dfs(dfs, i);
+        return res;
+    }
+};
+// @lc code=end
+

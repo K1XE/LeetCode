@@ -7,7 +7,7 @@ using namespace std;
 #define For(i, _) for (int i = 0, i##end = _; i < i##end; ++i)
 #define FOR(i, _, __) for (int i = _, i##end = __; i < i##end; ++i)
 #define Rep(i, _) for (int i = (_); i >= 0; --i)
-#define REP(i, __, _) for (int i = (__), i##end = _; i >= i##end; --i)
+#define REP(i, _, __) for (int i = (__), i##end = _; i >= i##end; --i)
 typedef long long ll;
 typedef unsigned long long ull;
 #define V vector
@@ -30,3 +30,21 @@ template <class T>
 inline bool ckmax(T &x, const T &y) { return x < y ? (x = y, true) : false; }
 int init = []()
 { ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+class Solution
+{
+public:
+    int maxSumDistinctTriplet(vector<int> &x, vector<int> &y)
+    {
+        int n = x.size();
+        map<int, int> hash;
+        For(i, n)
+        {
+            ckmax(hash[x[i]], y[i]);
+        }
+        if (hash.size() < 3) return -1;
+        V<int> val;
+        for (auto& x : hash) val.pb(x.second);
+        ranges::sort(val, greater<>());
+        return val[0] + val[1] + val[2];
+    }
+};

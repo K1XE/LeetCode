@@ -7,7 +7,7 @@ using namespace std;
 #define For(i, _) for (int i = 0, i##end = _; i < i##end; ++i)
 #define FOR(i, _, __) for (int i = _, i##end = __; i < i##end; ++i)
 #define Rep(i, _) for (int i = (_); i >= 0; --i)
-#define REP(i, __, _) for (int i = (__), i##end = _; i >= i##end; --i)
+#define REP(i, _, __) for (int i = (__), i##end = _; i >= i##end; --i)
 typedef long long ll;
 typedef unsigned long long ull;
 #define V vector
@@ -30,3 +30,18 @@ template <class T>
 inline bool ckmax(T &x, const T &y) { return x < y ? (x = y, true) : false; }
 int init = []()
 { ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+class Solution
+{
+public:
+    int countPermutations(vector<int> &c_)
+    {
+        int n = c_.size();
+        V<int> cpy = c_;
+        ranges::sort(cpy);
+        if (cpy[0] != c_[0]) return 0;
+        if (n > 1 && cpy[1] == cpy[0]) return 0;
+        ll res = 0;
+        FOR(i, 1, n) res = (res * i) % mod;
+        return static_cast<int>(res);
+    }
+};
