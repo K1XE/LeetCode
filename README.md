@@ -22,11 +22,11 @@
   <tbody>
     <tr>
       <td>简单</td>
-      <td>82</td>
+      <td>83</td>
     </tr>
     <tr>
       <td>中等</td>
-      <td>173</td>
+      <td>177</td>
     </tr>
     <tr>
       <td>困难</td>
