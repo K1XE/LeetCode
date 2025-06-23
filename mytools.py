@@ -9,7 +9,7 @@ from itertools import combinations
 from typing import List, Optional, Tuple
 from functools import cache
 from sortedcontainers import SortedSet, SortedDict
-directions = (1, 0), (-1, 0), (0, 1), (0, -1)
+dir = (1, 0), (-1, 0), (0, 1), (0, -1)
 inf = float('inf')
 # ¶þ²æÊ÷½Úµã
 class TreeNode:
