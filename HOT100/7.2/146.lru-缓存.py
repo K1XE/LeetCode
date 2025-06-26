@@ -3,7 +3,7 @@
 #
 # [146] LRU 缓存
 #
-
+from mytools import *
 # @lc code=start
 class Node:
     def __init__(self, _key, _val):
@@ -19,17 +19,14 @@ class LRUCache:
         self.hash = dict()
         self.dummy.next = self.dummy
         self.dummy.prev = self.dummy
-
-    def remove(self, n):
+    def remove(self, n: Optional[Node]):
         n.next.prev = n.prev
         n.prev.next = n.next
-
-    def push_front(self, n):
+    def push_front(self, n: Optional[Node]):
         n.next = self.dummy.next
         n.prev = self.dummy
         self.dummy.next.prev = n
         self.dummy.next = n
-
     def get_node(self, key):
         if key not in self.hash:
             return None
@@ -37,7 +34,6 @@ class LRUCache:
         self.remove(node)
         self.push_front(node)
         return node
-    
     def get(self, key: int) -> int:
         node = self.get_node(key)
         return node.val if node else -1
@@ -56,7 +52,6 @@ class LRUCache:
             u = self.dummy.prev
             self.remove(u)
             del self.hash[u.key]
-
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)
