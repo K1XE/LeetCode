@@ -5,7 +5,7 @@ import random
 import bisect
 import numpy as np
 from collections import deque, defaultdict, Counter
-from itertools import combinations, permutations, pairwise
+from itertools import *
 from typing import List, Optional, Tuple
 from functools import cache
 from sortedcontainers import SortedSet, SortedDict
