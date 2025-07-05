@@ -1,3 +1,9 @@
+/*
+ * @lc app=leetcode.cn id=763 lang=cpp
+ *
+ * [763] 划分字母区间
+ */
+// @lc code=start
 #pragma once
 #include <bits/stdc++.h>
 #include <ranges>
@@ -30,3 +36,44 @@ template <class T>
 inline bool ckmax(T &x, const T &y) { return x < y ? (x = y, true) : false; }
 int init = []()
 { ios::sync_with_stdio(false); cin.tie(nullptr); return 0; }();
+
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        unordered_map<int, int> hash;
+        int n = s.size();
+        V<int> res;
+        FOR(i, 0, n) hash[s[i]] = i;
+        int sta = 0, eds = 0;
+        FOR(i, 0, n) {
+            ckmax(eds, hash[s[i]]);
+            if (i == eds) {
+                res.pb(eds - sta + 1);
+                sta = i + 1;
+            }
+        }
+        return res;
+    }
+};
+// @lc code=end
+
+class Solution {
+    public:
+        vector<int> partitionLabels(string s) {
+            unordered_map<int, int> hash;
+            int n = s.size();
+            V<int> res;
+            FOR(i, 0, n) hash[s[i]] = i;
+            for (int i = 0; i < n;) {
+                int eds = hash[s[i]];
+                int j = i + 1;
+                while (j < eds) {
+                    ckmax(eds, hash[s[j]]);
+                    j ++;
+                }
+                res.pb(eds - i + 1);
+                i = eds + 1;
+            }
+            return res;
+        }
+    };
