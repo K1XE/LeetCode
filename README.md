@@ -3,7 +3,8 @@
     <h1 style="margin-bottom: 0;">刷题记录</h1>
     <a>
       📚<a href="https://leetcode.cn/studyplan/top-100-liked/" target="_blank">HOT100</a> | 
-      📚<a href="https://programmercarl.com/" target="_blank">代码随想录</a>
+      📚<a href="https://programmercarl.com/" target="_blank">代码随想录</a> |
+      📚<a href="https://leetcode.cn/studyplan/top-interview-150/" target="_blank">top-interview-150</a>
     </a>
   </p>
 </div>
@@ -22,11 +23,11 @@
   <tbody>
     <tr>
       <td>简单</td>
-      <td>109</td>
+      <td>110</td>
     </tr>
     <tr>
       <td>中等</td>
-      <td>221</td>
+      <td>223</td>
     </tr>
     <tr>
       <td>困难</td>
