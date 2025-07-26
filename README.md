@@ -27,11 +27,11 @@
     </tr>
     <tr>
       <td>中等</td>
-      <td>223</td>
+      <td>227</td>
     </tr>
     <tr>
       <td>困难</td>
-      <td>48</td>
+      <td>50</td>
     </tr>
   </tbody>
 </table>
