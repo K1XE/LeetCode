@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode.cn id=2411 lang=cpp
+ * @lc app=leetcode.cn id=2419 lang=cpp
  *
- * [2411] 按位或最大的最小子数组长度
+ * [2419] 按位与最大的最长子数组
  */
 
 // @lc code=start
@@ -40,18 +40,17 @@ int init = []()
 
 class Solution {
 public:
-    vector<int> smallestSubarrays(vector<int>& nums) {
+    int longestSubarray(vector<int>& nums) {
         int n = nums.size();
-        vector<int> ans(n);
-        for (int i = 0; i < n; i++) {
-            int x = nums[i];
-            ans[i] = 1;
-            for (int j = i - 1; j >= 0 && (nums[j] | x) != nums[j]; j--) {
-                nums[j] |= x;
-                ans[j] = i - j + 1;
-            }
+        int res = 0;
+        for (auto& x : nums) ckmax(res, x);
+        int i = 0, j = 0;
+        int ret = 1;
+        FOR(i, 0, n) {
+            if (nums[i] != res) j = i + 1;
+            else ckmax(ret, i - j + 1);
         }
-        return ans;
+        return ret;
     }
 };
 // @lc code=end
