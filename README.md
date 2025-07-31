@@ -23,15 +23,15 @@
   <tbody>
     <tr>
       <td>简单</td>
-      <td>114</td>
+      <td>116</td>
     </tr>
     <tr>
       <td>中等</td>
-      <td>234</td>
+      <td>237</td>
     </tr>
     <tr>
       <td>困难</td>
-      <td>52</td>
+      <td>53</td>
     </tr>
   </tbody>
 </table>
