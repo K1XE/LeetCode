@@ -103,7 +103,7 @@ class Encoder(nn.Module):
 class DecoderLayer(nn.Module):
     def __init__(self, 
                 hidden_dim, num_heads, 
-                self_mha_dp, corss_mha_dp, ffn_dp, 
+                self_mha_dp, cross_mha_dp, ffn_dp, 
                 ffn_sz, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.self_mha = MultiHeadAttention(hidden_dim, num_heads)
@@ -111,7 +111,7 @@ class DecoderLayer(nn.Module):
         self.ln1 = nn.LayerNorm(hidden_dim)
 
         self.cross_mha =MultiHeadAttention(hidden_dim, num_heads)
-        self.dp2 = nn.Dropout(corss_mha_dp)
+        self.dp2 = nn.Dropout(cross_mha_dp)
         self.ln2 = nn.LayerNorm(hidden_dim)
 
         self.ffn = nn.Sequential(
@@ -158,7 +158,7 @@ class Transformer(nn.Module):
                 vocab_size, max_seq_len,
                 hidden_dim, num_heads, 
                 encoder_mha_dp, encoder_ffn_dp, encoder_ffn_sz, 
-                decoder_self_mha_dp, decoder_corss_mha_dp, decoder_ffn_dp, decoder_ffn_sz, 
+                decoder_self_mha_dp, decoder_cross_mha_dp, decoder_ffn_dp, decoder_ffn_sz, 
                 encoder_num_layers, decoder_num_layers, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
 
@@ -168,7 +168,7 @@ class Transformer(nn.Module):
                             encoder_mha_dp, encoder_ffn_dp, encoder_ffn_sz, 
                             encoder_num_layers)
         self.decoder = Decoder(hidden_dim, num_heads, 
-                            decoder_self_mha_dp, decoder_corss_mha_dp, decoder_ffn_dp, decoder_ffn_sz, 
+                            decoder_self_mha_dp, decoder_cross_mha_dp, decoder_ffn_dp, decoder_ffn_sz, 
                             decoder_num_layers)
         self.output_linear = nn.Linear(hidden_dim, vocab_size)
 
@@ -194,7 +194,7 @@ def transformer_test():
     
     bsz, vocab_size, max_seq_len, src_seq_len, tgt_seq_len, hidden_dim, num_heads = 6, 512, 64, 5, 7, 16, 8
     encoder_mha_dp, encoder_ffn_dp, encoder_ffn_sz, encoder_num_layers = 0.1, 0.1, 4 * hidden_dim, 10
-    decoder_self_mha_dp, decoder_corss_mha_dp, decoder_ffn_dp, decoder_ffn_sz, decoder_num_layers = 0.1, 0.1, 0.1, 4 * hidden_dim, 10
+    decoder_self_mha_dp, decoder_cross_mha_dp, decoder_ffn_dp, decoder_ffn_sz, decoder_num_layers = 0.1, 0.1, 0.1, 4 * hidden_dim, 10
     
     src = torch.randint(0, vocab_size, (bsz, src_seq_len))
     tgt = torch.randint(0, vocab_size, (bsz, tgt_seq_len))
@@ -208,7 +208,7 @@ def transformer_test():
                             encoder_ffn_sz=encoder_ffn_sz,
                             encoder_num_layers=encoder_num_layers,
                             decoder_self_mha_dp=decoder_self_mha_dp,
-                            decoder_corss_mha_dp=decoder_corss_mha_dp,
+                            decoder_cross_mha_dp=decoder_cross_mha_dp,
                             decoder_ffn_dp=decoder_ffn_dp,
                             decoder_ffn_sz=decoder_ffn_sz,
                             decoder_num_layers=decoder_num_layers)
