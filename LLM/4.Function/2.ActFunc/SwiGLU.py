@@ -10,6 +10,7 @@ class LlamaMLP(nn.Module):
     def forward(self, x: Tensor):
         up = self.up_proj(x)
         gate = self.gate_proj(x)
+        gate_swish = nn.SiLU(gate)
         gate_swish = gate * torch.sigmoid(gate)
         output = self.down_proj(up * gate_swish)
         return output

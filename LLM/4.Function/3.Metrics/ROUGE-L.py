@@ -7,7 +7,7 @@ def rouge_l(ref, candidate):
     for i in range(1, n1 + 1):
         for j in range(1, n2 + 1):
             dp[i][j] = dp[i - 1][j - 1] + 1 if ref[i - 1] == candidate[j - 1] else max(dp[i - 1][j], dp[i][j - 1])
-    lcs = dp[n1][n2]
+    lcs = dp[n1][n2] 
     
     # 处理边界情况：当没有公共子序列时
     if lcs == 0:
