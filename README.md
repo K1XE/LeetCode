@@ -16,9 +16,9 @@
 
 | 难度 | 已完成题数 |
 | :--: | :--------: |
-| 简单 |    119    |
-| 中等 |    246    |
-| 困难 |     56     |
+| 简单 |    121    |
+| 中等 |    252    |
+| 困难 |     57     |
 
 ---
 
@@ -32,4 +32,4 @@
 | 3    | Transformer          | <ul><li>✔️ Token Embedding</li><li>✔️ Positional Embedding</li><li>✔️ Encoder Layer (MHA + FFN)</li><li>✔️ Decoder Layer</li><li>✔️ Stacked Encoder/Decoder</li><li>✔️ Transformer</li></ul> |
 | 4    | Function             | <ul><li>✔️ MSE</li><li>✔️ CE, BCE, KL, Focal</li><li>✔️ Sigmoid, Tanh</li><li>✔️ ReLU, Leaky ReLU, ELU</li><li>✔️ Swish, GeLU, SwiGLU</li><li>✔️ Softmax</li><li>✔️ PPL, ROUGE, BLEU</li></ul> |
 | 5    | ML            | <ul><li>✔️ 线性回归</li><li>✔️ 逻辑回归</li><li>✔️ Softmax 回归</li><li>⬜ 反向传播</li><li>⬜ SGD 优化器</li></ul> |
-| 6    | RLHF                 | <ul><li>✔️ 广义优势估计 (GAE)</li><li>⬜ PPO Loss & Value Loss</li><li>⬜ DPO Loss</li><li>⬜ GRPO Loss</li><li>⬜ 无偏 KL 散度</li></ul> |
+| 6    | RLHF                 | <ul><li>✔️ 广义优势估计 (GAE)</li><li>✔️ PPO Loss & Value Loss</li><li>✔️ DPO Loss</li><li>⬜ GRPO Loss</li><li>⬜ 无偏 KL 散度</li></ul> |
