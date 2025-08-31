@@ -1,3 +1,4 @@
+# https://www.cnblogs.com/mengrennwpu/p/17999027#:~:text=direct%2Dpreference%2Doptimization-,5.1%20DPO%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0,-1%20def%20preference_loss
 import torch
 import torch.nn.functional as F
 from typing import Tuple
