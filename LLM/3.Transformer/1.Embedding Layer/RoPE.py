@@ -41,25 +41,3 @@ def apply_RoPE(q: Tensor, k: Tensor):
     k = k * cos_pos + k2 * sin_pos
     return q, k
     
-'''
-import torch
-import math
-
-def precompute_freqs(head_dim, max_len, device=None):
-    # 每两个维度共享一个角频率
-    theta = 1.0 / (10000 ** (torch.arange(0, head_dim, 2, device=device).float() / head_dim))
-    t = torch.arange(max_len, device=device)
-    freqs = torch.outer(t, theta)  # (max_len, head_dim/2)
-    freqs_cis = torch.polar(torch.ones_like(freqs), freqs)  # 转成复数 (cosθ + i sinθ)
-    return freqs_cis  # (max_len, head_dim/2)
-
-def apply_rope(x, freqs_cis):
-    # x: (bsz, n_heads, seq_len, head_dim)
-    bsz, n_heads, seq_len, head_dim = x.shape
-    x = x.float().reshape(bsz, n_heads, seq_len, head_dim // 2, 2)
-    x_complex = torch.view_as_complex(x)  # 变成复数 (a+ib)
-    freqs_cis = freqs_cis[:seq_len]  # (seq_len, head_dim/2)
-    x_out = x_complex * freqs_cis  # 复数乘法 = 旋转
-    x_out = torch.view_as_real(x_out).reshape(bsz, n_heads, seq_len, head_dim)
-    return x_out
-'''
