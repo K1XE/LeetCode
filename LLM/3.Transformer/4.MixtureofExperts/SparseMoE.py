@@ -1,7 +1,7 @@
 import torch
 from torch import nn, Tensor
 import torch.nn.functional as F
-from MixtureofExperts import SwiGLUExpert, MoEConfig, MoERouter
+from MoE import SwiGLUExpert, MoEConfig, MoERouter
 
 class SparseMoE(nn.Module):
     def __init__(self, config, *args, **kwargs) -> None:

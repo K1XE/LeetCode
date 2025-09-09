@@ -1,6 +1,6 @@
 import torch
 from torch import nn, Tensor
-from MixtureofExperts import SwiGLUExpert
+from MoE import SwiGLUExpert
 
 class BasicMoE(nn.Module):
     def __init__(self, hidden_dim, num_experts, *args, **kwargs) -> None:
