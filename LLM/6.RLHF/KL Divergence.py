@@ -5,7 +5,7 @@ def KLEstimator():
     p = dis.Normal(loc=0, scale=1)
     q = dis.Normal(loc=0.1, scale=1)
     x = q.sample(sample_shape=(10_000_000, ))
-    trueKL = dis.kl_divergence(p, q)
+    trueKL = dis.kl_divergence(q, p) # should be reversed KL
     print(f"true KL is {trueKL}")
     logr = p.log_prob(x) - q.log_prob(x)
     k1 = - logr
