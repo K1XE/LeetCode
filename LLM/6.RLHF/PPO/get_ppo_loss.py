@@ -25,7 +25,7 @@ def agg_loss(loss_mat, loss_mask, agg_type):
         return torch.mean(seq_losses)
     elif agg_type == "seq-mean-token-sum-norm":
         seq_losses = torch.sum(loss_mat * loss_mask, dim=-1)
-        return seq_losses / loss_mask.shape[-1]
+        return torch.sum(seq_losses) / loss_mask.shape[-1]
 
 
 def get_policy_loss(
