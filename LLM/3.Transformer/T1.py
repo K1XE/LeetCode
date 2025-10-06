@@ -29,17 +29,23 @@ class RoPE:
     def apply_rope(X: Tensor, max_len):
         bsz, num_heads, seq_len, head_dim = X.shape
         assert head_dim % 2 == 0
-        X_ = X.reshape(bsz, num_heads, seq_len, head_dim // 2, 2)
-        X_even = X_[..., 0]
-        X_odd = X_[..., 1]
+        # X_ = X.reshape(bsz, num_heads, seq_len, head_dim // 2, 2)
+        X_even = X[..., 0::2]
+        X_odd = X[..., 1::2]
+        device = X.device
+        
         sin, cos = RoPE.get_sin_cos(max_len, head_dim)
-        sin = sin[:seq_len].unsqueeze(0).unsqueeze(0)
-        cos = cos[:seq_len].unsqueeze(0).unsqueeze(0)
+        sin = sin[:seq_len].unsqueeze(0).unsqueeze(0).to(device)
+        cos = cos[:seq_len].unsqueeze(0).unsqueeze(0).to(device)
         out_even = X_even * cos - X_odd * sin
         out_odd = X_even * sin + X_odd * cos
-        out = torch.stack([out_even, out_odd], dim=-1).reshape(
-            bsz, num_heads, seq_len, head_dim
-        )
+        # out = torch.stack([out_even, out_odd], dim=-1).reshape(
+        #     bsz, num_heads, seq_len, head_dim
+        # )
+        out = torch.empty_like(X)
+        out[..., 0::2] = out_even
+        out[..., 1::2] = out_odd
+        
         return out
 
 
@@ -85,15 +91,19 @@ class GroupQueryAttention(nn.Module):
         k = split_heads(k, self.num_groups)
         v = split_heads(v, self.num_groups)
 
+        q = RoPE.apply_rope(q, max_len)
         k = RoPE.apply_rope(k, max_len)
-        v = RoPE.apply_rope(v, max_len)
         attn_scores: Tensor = torch.matmul(q, k.transpose(-1, -2)) / self.head_dim**0.5
         if causal_mask is not None:
             attn_scores.masked_fill_(causal_mask, float("-inf"))
         if padding_mask is not None:
             attn_scores.masked_fill_(padding_mask[:, None, None, :], float("-inf"))
         attn_weights = F.softmax(attn_scores, dim=-1)
-        output_mid = torch.matmul(attn_weights, v).reshape(bsz, tgt_seq_len, hidden_dim)
+        output_mid = (
+            torch.matmul(attn_weights, v)
+            .transpose(1, 2)
+            .reshape(bsz, tgt_seq_len, hidden_dim)
+        )
         out = self.o_proj(output_mid)
         return out
 
@@ -139,7 +149,6 @@ class Encoder(nn.Module):
         ffn_dp_rate,
     ):
         super().__init__()
-        self.num_layers = num_layers
         self.encoderLayers = nn.ModuleList(
             [
                 EncoderLayer(
@@ -150,8 +159,8 @@ class Encoder(nn.Module):
                     dp2_rate=dp2_rate,
                     ffn_dp_rate=ffn_dp_rate,
                 )
+                for _ in range(num_layers)
             ]
-            for _ in range(self.num_layers)
         )
 
     def forward(self, X: Tensor, max_len):
@@ -195,7 +204,7 @@ class DecoderLayer(nn.Module):
         o1 = self.dp1(mid) + X
 
         mid = self.pre_rmsnorm2(o1)
-        mid = self.gqa_cross(mid, max_len, encoder_output, padding_mask=padding_mask)
+        mid = self.gqa_cross(mid, encoder_output, max_len, padding_mask=padding_mask)
         o2 = self.dp2(mid) + o1
 
         mid = self.pre_rmsnorm3(o2)
@@ -222,8 +231,8 @@ class Decoder(nn.Module):
                 DecoderLayer(
                     num_groups, num_heads, hidden_dim, dp1_rate, dp2_rate, ffn_dp_rate
                 )
+                for _ in range(num_layers)
             ]
-            for _ in range(num_layers)
         )
 
     def forward(
@@ -259,7 +268,7 @@ class Transformer(nn.Module):
         super().__init__()
         self.max_len = max_len
         self.token_emb = TokenEmbedding(vocab_size, hidden_dim)
-    
+
         self.encoder = Encoder(
             num_encoder_layer,
             num_groups,
@@ -288,8 +297,47 @@ class Transformer(nn.Module):
         encoder_out = self.encoder(encoder_mid, self.max_len)
 
         decoder_mid = self.token_emb(tgt)
-        decoder_out = self.decoder(decoder_mid, encoder_out, self.max_len, causal_mask, padding_mask)
+        decoder_out = self.decoder(
+            decoder_mid, encoder_out, self.max_len, causal_mask, padding_mask
+        )
 
         logits = self.lm_head(decoder_out)
 
         return logits
+
+
+def main():
+    bsz, max_len, vocab_size = 5, 16, 15
+    src_seq_len, tgt_seq_len = 8, 10
+    hidden_dim, num_groups, num_heads = 32, 2, 8
+    num_encoder_layers, num_decoder_layers = 2, 2
+    src = torch.randint(0, vocab_size, (bsz, src_seq_len))
+    tgt = torch.randint(0, vocab_size, (bsz, tgt_seq_len))
+    tgt_causal_mask = torch.triu(
+        torch.ones(tgt_seq_len, tgt_seq_len, dtype=torch.bool), diagonal=1
+    )
+    src_padding_mask = torch.zeros(bsz, src_seq_len, dtype=torch.bool)
+    src_padding_mask[:, -2:] = True
+
+    model = Transformer(
+        vocab_size=vocab_size,
+        max_len=max_len,
+        num_encoder_layer=num_encoder_layers,
+        num_decoder_layer=num_decoder_layers,
+        num_groups=num_groups,
+        num_heads=num_heads,
+        hidden_dim=hidden_dim,
+        decoder_dp1_rate=0.1,
+        decoder_dp2_rate=0.1,
+        decoder_ffn_rate=0.1,
+        encoder_dp1_rate=0.1,
+        encoder_dp2_rate=0.1,
+        encoder_ffn_rate=0.1,
+    )
+    
+    logits = model(src, tgt, tgt_causal_mask, src_padding_mask)
+    print(logits.shape)
+
+
+if __name__ == "__main__":
+    main()
