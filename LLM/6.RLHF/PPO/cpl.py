@@ -127,3 +127,4 @@ def compute_pg_loss(
         - compute_entropy_loss(logits, agg_type_entropy, response_mask)
         + kl_penalty(logp, ref_logp, kl_type)
     )
+    return loss
