@@ -9,7 +9,7 @@
 
 <div align="center">
 
-### 📝 [LeetCode 刷题进度](https://leetcode.cn/)
+### 📝 [LeetCode 刷题进度](https://leetcode.cn/u/kize0/)
 
 | 难度 | 已完成题数 |
 | :--: | :--------: |

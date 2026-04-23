@@ -10,9 +10,6 @@ class Solution:
         stk = []
         i = 0
         n = len(s)
-        import torch
-        X: torch.Tensor = torch.randn(2,2)
-        X.
         for i in range(n):
             if s[i] == "(" or s[i] == "[" or s[i] == "{": stk.append(s[i])
             else:
