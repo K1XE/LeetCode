@@ -14,7 +14,7 @@ from mytools import *
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         if not root: return []
-        res =[]
+        res = []
         def dfs(n):
             if not n: return
             dfs(n.left)
