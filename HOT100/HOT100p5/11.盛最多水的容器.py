@@ -1,0 +1,19 @@
+#
+# @lc app=leetcode.cn id=11 lang=python3
+#
+# [11] 盛最多水的容器
+#
+from mytools import *
+# @lc code=start
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        n = len(height)
+        l, r = 0, n - 1
+        res = 0
+        while l < r:
+            res = max(res, (r - l) * min(height[r], height[l]))
+            if height[l] > height[r]: r -= 1
+            else: l += 1
+        return res
+# @lc code=end
+
