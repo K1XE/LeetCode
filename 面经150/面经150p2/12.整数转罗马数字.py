@@ -1,0 +1,16 @@
+#
+# @lc app=leetcode.cn id=12 lang=python3
+#
+# [12] 整数转罗马数字
+#
+
+# @lc code=start
+class Solution:
+    def intToRoman(self, num: int) -> str:
+        R = (("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"),
+            ("", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"),
+            ("", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"),
+            ("", "M", "MM", "MMM"))
+        return R[3][num // 1000] + R[2][num % 1000 // 100] + R[1][num % 100 // 10] + R[0][num % 10]
+# @lc code=end
+
